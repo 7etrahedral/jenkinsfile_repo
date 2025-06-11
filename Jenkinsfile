@@ -8,18 +8,6 @@ pipeline {
       }
     }
 
-    stage('Build') {
-        when {
-            not {
-                expression { env.BRANCH_NAME?.startsWith('feature/') }
-            }
-        }
-        steps {
-            echo 'Building the project...'
-            // Example: sh 'make build'
-        }
-    }
-
     stage('Unit Test') {
       when {
         expression { env.BRANCH_NAME?.startsWith('feature/') }
@@ -30,14 +18,16 @@ pipeline {
       }
     }
 
-    stage('UI Test') {
-      when {
-        branch 'main'
-      }
-      steps {
-        echo 'Running UI tests...'
-        // Example: sh './run-ui-tests.sh'
-      }
+    stage('Build') {
+        when {
+            not {
+                expression { env.BRANCH_NAME?.startsWith('feature/') }
+            }
+        }
+        steps {
+            echo 'Building the project...'
+            // Example: sh 'make build'
+        }
     }
 
     stage('Deploy to SIT') {
