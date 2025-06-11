@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  environment {
-    SLACK_WEBHOOK_URL = credentials('slack-webhook') // Define in Jenkins > Credentials
-  }
-
   stages {
     stage('Clone') {
       steps {
@@ -66,12 +62,7 @@ pipeline {
         branch 'main'
       }
       steps {
-        echo 'Notifying Slack of successful build...'
-        sh '''
-          curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ Jenkins Pipeline for *main* completed successfully."}' \
-            $SLACK_WEBHOOK_URL
-        '''
+        echo '✅ Post Action: Full pipeline on main completed successfully.'
       }
     }
 
@@ -80,12 +71,7 @@ pipeline {
         branch 'main'
       }
       steps {
-        echo 'Notifying Slack of failed build...'
-        sh '''
-          curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"❌ Jenkins Pipeline for *main* failed."}' \
-            $SLACK_WEBHOOK_URL
-        '''
+        echo '❌ Post Action: Full pipeline on main failed.'
       }
     }
   }
