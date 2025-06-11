@@ -9,13 +9,8 @@ pipeline {
     }
 
     stage('Unit Test') {
-      when {
-        expression { env.BRANCH_NAME?.startsWith('feature/') }
-      }
-      steps {
         echo "Running Unit Tests on ${env.BRANCH_NAME}"
         // Example: sh './run-unit-tests.sh'
-      }
     }
 
     stage('Build') {
