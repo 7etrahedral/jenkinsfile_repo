@@ -58,21 +58,24 @@ pipeline {
 
   post {
     success {
-      when {
-        branch 'main'
-      }
-      steps {
-        echo '✅ Post Action: Full pipeline on main completed successfully.'
-      }
+        steps {
+            script {
+                if (env.BRANCH_NAME == 'main') {
+                    echo '✅ Post Action: Full pipeline on main completed successfully.'
+                }
+            }
+        }
     }
 
     failure {
-      when {
-        branch 'main'
-      }
-      steps {
-        echo '❌ Post Action: Full pipeline on main failed.'
-      }
+        steps {
+            script {
+                if (env.BRANCH_NAME == 'main') {
+                    echo '❌ Post Action: Full pipeline on main failed.'
+                }
+            }
+        }
     }
   }
+
 }
