@@ -9,10 +9,15 @@ pipeline {
     }
 
     stage('Build') {
-      steps {
-        echo 'Building the project...'
-        // Example: sh 'make build' or npm install
-      }
+        when {
+            not {
+                expression { env.BRANCH_NAME?.startsWith('feature/') }
+            }
+        }
+        steps {
+            echo 'Building the project...'
+            // Example: sh 'make build'
+        }
     }
 
     stage('Unit Test') {
