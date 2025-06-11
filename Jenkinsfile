@@ -9,8 +9,10 @@ pipeline {
     }
 
     stage('Unit Test') {
-        echo "Running Unit Tests on ${env.BRANCH_NAME}"
+        steps {
+             echo "Running Unit Tests on ${env.BRANCH_NAME}"
         // Example: sh './run-unit-tests.sh'
+        }
     }
 
     stage('Build') {
