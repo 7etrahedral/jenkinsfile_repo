@@ -61,6 +61,8 @@ pipeline {
         script {
             if (env.BRANCH_NAME == 'main') {
                 echo '✅ Post Action: Full pipeline on main completed successfully.'
+            } else if (env.BRANCH_NAME == 'feature/abc') {
+                echo '✅ Post Action: this is feature/abc.'
             }
         }
     }
@@ -69,6 +71,8 @@ pipeline {
         script {
             if (env.BRANCH_NAME == 'main') {
                 echo '❌ Post Action: Full pipeline on main failed.'
+            } else if (env.BRANCH_NAME == 'main') {
+                echo '❌ Post Action: this is feature/abc.'
             }
         }
     }
