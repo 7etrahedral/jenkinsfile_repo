@@ -20,11 +20,17 @@ pipeline {
         branch 'main'
       }
       steps {
-        build job: 'build-and-deploy',
-              parameters: [
-                string(name: 'BRANCH_TO_BUILD', value: 'sit')
-              ],
-              wait: true
+        script {
+          try {
+            build job: 'build-and-deploy',
+                  parameters: [string(name: 'BRANCH_TO_BUILD', value: 'sit')],
+                  wait: true
+          } catch (err) {
+            echo "❌ Build-and-deploy failed: ${err}"
+            currentBuild.result = 'FAILURE'
+            error("Stopping main pipeline due to failure in build-and-deploy.")
+          }
+        }
       }
     }
 
