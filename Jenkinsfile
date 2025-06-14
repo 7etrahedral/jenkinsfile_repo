@@ -15,25 +15,16 @@ pipeline {
         }
     }
 
-    stage('Build') {
-        when {
-            not {
-                expression { env.BRANCH_NAME?.startsWith('feature/') }
-            }
-        }
-        steps {
-            echo 'Building the project...'
-            // Example: sh 'make build'
-        }
-    }
-
-    stage('Deploy to SIT') {
+    stage('Trigger Build & Deploy to SIT') {
       when {
         branch 'main'
       }
       steps {
-        echo 'Deploying to SIT...'
-        // Example: sh './deploy-sit.sh'
+        build job: 'build-and-deploy',
+              parameters: [
+                string(name: 'BRANCH_TO_BUILD', value: 'sit')
+              ],
+              wait: true
       }
     }
 
